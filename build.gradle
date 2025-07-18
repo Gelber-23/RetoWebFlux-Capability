@@ -1,0 +1,56 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.pragma'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+ext {
+	mapStruct ="1.6.3"
+	mockitoVersion="5.17.0"
+	openApiVersion = "2.8.9"
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'io.asyncer:r2dbc-mysql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'io.projectreactor:reactor-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+
+	implementation "org.mapstruct:mapstruct:${mapStruct}"
+
+	annotationProcessor "org.mapstruct:mapstruct-processor:${mapStruct}"
+
+	testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+
+	testImplementation "org.mockito:mockito-junit-jupiter:${mockitoVersion}"
+
+	implementation "org.springdoc:springdoc-openapi-starter-webflux-ui:${openApiVersion}"
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
