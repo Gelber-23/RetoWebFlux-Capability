@@ -16,7 +16,6 @@ import com.pragma.capabilities.infraestructure.output.jpa.mapper.ICapabilityEnti
 import com.pragma.capabilities.infraestructure.output.jpa.repository.ICapabilityRepository;
 import com.pragma.capabilities.infraestructure.output.jpa.repository.ICapabilityTechnologyRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.List;
@@ -29,7 +28,7 @@ public class CapabilityAdapter implements ICapabilityPersistencePort {
     private final ICapabilityTechnologyRepository capabilityTechnologyRepository;
     private final ICapabilityEntityMapper capabilityEntityMapper;
     private final ITechnologyClientPort technologyClientPort;
-    private final R2dbcEntityTemplate template;
+
     @Override
     public Mono<Capability> save(Capability capability) {
 

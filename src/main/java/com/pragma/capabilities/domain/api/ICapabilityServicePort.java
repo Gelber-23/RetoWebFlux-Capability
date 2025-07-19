@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface ICapabilityServicePort {
 
-    Mono<? extends Capability> createCapability(Capability cap);
+    Mono<Capability> createCapability(Capability cap);
     Mono<Capability> getCapabilityById(Long id);
     Mono<PageModel<Capability>> getCapabilities(PageRequestModel pageRequest);
 }

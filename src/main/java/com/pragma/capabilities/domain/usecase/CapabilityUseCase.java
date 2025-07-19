@@ -28,7 +28,7 @@ public class CapabilityUseCase implements ICapabilityServicePort {
     }
 
     @Override
-    public Mono<? extends Capability> createCapability(Capability cap) {
+    public Mono<Capability> createCapability(Capability cap) {
         return validateData(cap)
                 .flatMap(this::validateTechnologies)
                 .flatMap(capabilityPersistencePort::save);
