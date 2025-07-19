@@ -9,13 +9,11 @@ import com.pragma.capabilities.application.mapper.request.ICapabilityRequestMapp
 import com.pragma.capabilities.application.mapper.request.IPageRequestMapper;
 import com.pragma.capabilities.application.mapper.response.ICapabilityResponseMapper;
 import com.pragma.capabilities.domain.api.ICapabilityServicePort;
-import com.pragma.capabilities.domain.model.page.PageModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -50,7 +48,7 @@ public class CapabilityHandler implements ICapabilityHandler {
 
                     List<CapabilityResponse> listCapability = pageModel.getContent().stream()
                             .map(capabilityResponseMapper::toResponse)
-                            .collect(Collectors.toList());
+                            .toList();
 
                     return new PageResponse<>(
                             listCapability,

@@ -22,11 +22,10 @@ public class BeanConfiguration {
     private final ICapabilityEntityMapper capabilityEntityMapper;
     private final ICapabilityTechnologyRepository capabilityTechnologyRepository;
     private final TechnologyWebClientAdapter technologyWebClientAdapter;
-    private final R2dbcEntityTemplate r2dbcEntityTemplate;
 
     @Bean
     public ICapabilityPersistencePort capabilityPersistencePort(){
-        return new CapabilityAdapter(capabilityRepository, capabilityTechnologyRepository, capabilityEntityMapper,technologyWebClientAdapter,r2dbcEntityTemplate);
+        return new CapabilityAdapter(capabilityRepository, capabilityTechnologyRepository, capabilityEntityMapper,technologyWebClientAdapter);
     }
 
     @Bean
