@@ -59,4 +59,9 @@ public class CapabilityHandler implements ICapabilityHandler {
                     );
                 });
     }
+
+    @Override
+    public Mono<Void> deleteCapabilityById(Long id) {
+        return capabilityServicePort.deleteCapabilityById(id);
+    }
 }

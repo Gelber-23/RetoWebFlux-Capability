@@ -16,6 +16,7 @@ import com.pragma.capabilities.infraestructure.output.jpa.mapper.ICapabilityEnti
 import com.pragma.capabilities.infraestructure.output.jpa.repository.ICapabilityRepository;
 import com.pragma.capabilities.infraestructure.output.jpa.repository.ICapabilityTechnologyRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.reactive.TransactionalOperator;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import java.util.List;
@@ -28,7 +29,7 @@ public class CapabilityAdapter implements ICapabilityPersistencePort {
     private final ICapabilityTechnologyRepository capabilityTechnologyRepository;
     private final ICapabilityEntityMapper capabilityEntityMapper;
     private final ITechnologyClientPort technologyClientPort;
-
+    private final TransactionalOperator transactionalOperator;
     @Override
     public Mono<Capability> save(Capability capability) {
 
@@ -127,5 +128,40 @@ public class CapabilityAdapter implements ICapabilityPersistencePort {
                     return new PageModel<>(caps, tot, page, size);
                 });
     }
+    @Override
+    public Mono<Void> deleteCapabilityById(Long capabilityId) {
+
+        return capabilityTechnologyRepository.findAllByCapabilityId(capabilityId)
+                .map(CapabilityTechnologyEntity::getTechnologyId)
+                .collectList()
+
+                .flatMap(techIds ->
+
+                        Flux.fromIterable(techIds)
+                                .flatMap(techId ->
+                                        capabilityTechnologyRepository.findAllByTechnologyId(techId)
+                                                .count()
+                                                .filter(count -> count == 1)
+                                                .map(id -> techId)
+                                )
+                                .collectList()
+
+                                .flatMap(techIdsToDelete ->
+
+                                        transactionalOperator
+                                                .execute(status ->
+                                                        capabilityRepository.deleteById(capabilityId)
+                                                )
+                                                .then(
+
+                                                        Flux.fromIterable(techIdsToDelete)
+                                                                .flatMap(technologyClientPort::deleteTechnologyById)
+                                                                .then()
+                                                )
+                                )
+                );
+    }
+
+
 
 }

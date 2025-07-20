@@ -10,4 +10,8 @@ public interface ICapabilityServicePort {
     Mono<Capability> createCapability(Capability cap);
     Mono<Capability> getCapabilityById(Long id);
     Mono<PageModel<Capability>> getCapabilities(PageRequestModel pageRequest);
+
+    Mono<Void> deleteCapabilityById(Long id);
 }
+
+

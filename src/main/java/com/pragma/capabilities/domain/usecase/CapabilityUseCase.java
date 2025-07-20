@@ -45,6 +45,11 @@ public class CapabilityUseCase implements ICapabilityServicePort {
         return capabilityPersistencePort.getCapabilities(pageRequest);
     }
 
+    @Override
+    public Mono<Void> deleteCapabilityById(Long id) {
+        return capabilityPersistencePort.deleteCapabilityById(id);
+    }
+
 
     private Mono<Capability> validateData(Capability cap) {
         List<Technology> techs = cap.getTechnologies();
