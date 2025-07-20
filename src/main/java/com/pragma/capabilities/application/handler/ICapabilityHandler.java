@@ -11,4 +11,5 @@ public interface ICapabilityHandler {
     Mono<CapabilityResponse> createCapability(CapabilityRequest cap);
     Mono<CapabilityResponse> getCapabilityById(Long id);
     Mono<PageResponse<CapabilityResponse>> getCapabilities(PageRequest pageRequest);
+    Mono<Void> deleteCapabilityById(Long id);
 }

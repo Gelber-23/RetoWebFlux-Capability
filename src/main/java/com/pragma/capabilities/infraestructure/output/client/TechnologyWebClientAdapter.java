@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 @Component
 public class TechnologyWebClientAdapter  implements ITechnologyClientPort {
 
@@ -25,5 +27,22 @@ public class TechnologyWebClientAdapter  implements ITechnologyClientPort {
                         .retrieve()
                         .bodyToMono(Technology.class)
         );
+    }
+
+    @Override
+    public Mono<Void> deleteTechnologyById(Long id) {
+        return webClient
+                .delete()
+                .uri("/" + id)
+                .exchangeToMono(response -> {
+                    if (response.statusCode().is2xxSuccessful()) {
+
+                        return Mono.empty();
+                    } else {
+
+                        return response.createException().flatMap(Mono::error);
+                    }
+                });
+
     }
 }

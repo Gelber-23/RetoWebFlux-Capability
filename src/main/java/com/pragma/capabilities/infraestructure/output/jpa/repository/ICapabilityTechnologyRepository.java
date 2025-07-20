@@ -8,4 +8,6 @@ import reactor.core.publisher.Mono;
 public interface ICapabilityTechnologyRepository extends ReactiveCrudRepository<CapabilityTechnologyEntity, Long> {
     Flux<CapabilityTechnologyEntity> findAllByCapabilityId(Long capabilityId);
     Mono<Void> deleteAllByCapabilityId(Long capabilityId);
+
+    Flux<CapabilityTechnologyEntity> findAllByTechnologyId(Long technologyId);
 }

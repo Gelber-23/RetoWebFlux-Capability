@@ -76,4 +76,20 @@ public class CapabilityRestController {
     ) {
         return capabilityHandler.getCapabilities(new PageRequest(page, size, order, sortBy));
     }
+
+    @Operation(summary = OpenApiConstants.DELETE_CAPABILITY_TITLE)
+    @ApiResponses(value = {
+            @ApiResponse(responseCode =  OpenApiConstants.RESPONSE_CODE_200, description = OpenApiConstants.DELETE_CAPABILITY_MESSAGE, content = @Content),
+            @ApiResponse(responseCode = OpenApiConstants.RESPONSE_CODE_404, description =  OpenApiConstants.NO_DATA_MESSAGE , content = @Content)
+    })
+    @DeleteMapping("/{id}")
+
+    public Mono<Void> deleteCapabilityById(@PathVariable(value = "id")long id){
+
+        return capabilityHandler.deleteCapabilityById( id) ;
+    }
+
+
+
+
 }

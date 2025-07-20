@@ -9,4 +9,6 @@ public interface ICapabilityPersistencePort {
     Mono<Capability> save(Capability capability);
     Mono<Capability> findById(Long id);
     Mono<PageModel<Capability>> getCapabilities(PageRequestModel pageRequest);
+    Mono<Void> deleteCapabilityById(Long id);
+
 }
